@@ -1,0 +1,258 @@
+{
+  "atualizadoEm": "2026-09-11T19:13:11Z",
+  "carreira": {
+    "buscadoEm": "2026-09-11T19:13:11Z",
+    "oportunidades": [
+      {
+        "bolsa": "não divulgada",
+        "carga": "30h/semana",
+        "empresa": "iFood",
+        "encaixe": "sim",
+        "fonte": "https://jcconcursos.com.br/noticia/empregos/ifood-abre-estagio-para-estudantes-de-todos-os-cursos-inscricoes-vao-ate-setembro-145086",
+        "formatura": "jul/2027 a dez/2029",
+        "id": "ifood-ifuture-2027",
+        "link": "https://carreiras.ifood.com.br/job/8728486002/",
+        "modalidade": "Remoto ou híbrido",
+        "motivo": "Formatura dentro da janela e aceita remoto.",
+        "prazo": "2026-09-11",
+        "programa": "iFuture 2027",
+        "trilha": "Tecnologia — eng. de software, dados, produto/design"
+      },
+      {
+        "bolsa": "compatível com o mercado",
+        "carga": "—",
+        "empresa": "Localiza&Co",
+        "encaixe": "verificar",
+        "fonte": "https://diariodocomercio.com.br/vagas/localiza-estagio-trainee-2027/",
+        "formatura": "dez/2027 a dez/2028",
+        "id": "localiza-estagio-tech-2027",
+        "link": "https://cloud.e.localiza.com/estagio-tech",
+        "modalidade": "Híbrido, 2x por semana em Belo Horizonte (MG) ou Curitiba (PR)",
+        "motivo": "Formatura na janela, mas exige presença em BH ou Curitiba.",
+        "prazo": "2026-09-18",
+        "programa": "Estágio Tech 2027",
+        "trilha": "Tecnologia, com foco em IA"
+      },
+      {
+        "bolsa": "R$ 3.000",
+        "carga": "30h/semana",
+        "empresa": "Casa dos Ventos",
+        "encaixe": "verificar",
+        "fonte": "https://www.horabrasil.com.br/2026/09/09/casa-dos-ventos-estagio-2027",
+        "formatura": "dez/2027 a dez/2028",
+        "id": "casa-dos-ventos-2027",
+        "link": "https://programadeestagiocdv.gupy.io/",
+        "modalidade": "Híbrido, 3x por semana em SP, Fortaleza ou Petrolina",
+        "motivo": "Formatura na janela, mas exige presença em SP, Fortaleza ou Petrolina.",
+        "prazo": "2026-09-30",
+        "programa": "Estágio 2027",
+        "trilha": "Tecnologia & Analytics — sistemas, dados, IA, cibersegurança"
+      }
+    ]
+  },
+  "mercado": {
+    "dolar": {
+      "data": "2026-09-11",
+      "serie": [
+        {
+          "d": "2026-08-03",
+          "v": 5.0723
+        },
+        {
+          "d": "2026-08-04",
+          "v": 5.1053
+        },
+        {
+          "d": "2026-08-05",
+          "v": 5.1154
+        },
+        {
+          "d": "2026-08-06",
+          "v": 5.1017
+        },
+        {
+          "d": "2026-08-07",
+          "v": 5.0908
+        },
+        {
+          "d": "2026-08-10",
+          "v": 5.0963
+        },
+        {
+          "d": "2026-08-11",
+          "v": 5.1285
+        },
+        {
+          "d": "2026-08-12",
+          "v": 5.1639
+        },
+        {
+          "d": "2026-08-13",
+          "v": 5.1859
+        },
+        {
+          "d": "2026-08-14",
+          "v": 5.2236
+        },
+        {
+          "d": "2026-08-17",
+          "v": 5.2014
+        },
+        {
+          "d": "2026-08-18",
+          "v": 5.2043
+        },
+        {
+          "d": "2026-08-19",
+          "v": 5.1714
+        },
+        {
+          "d": "2026-08-20",
+          "v": 5.1862
+        },
+        {
+          "d": "2026-08-21",
+          "v": 5.1625
+        },
+        {
+          "d": "2026-08-24",
+          "v": 5.1512
+        },
+        {
+          "d": "2026-08-25",
+          "v": 5.149
+        },
+        {
+          "d": "2026-08-26",
+          "v": 5.1604
+        },
+        {
+          "d": "2026-08-27",
+          "v": 5.1642
+        },
+        {
+          "d": "2026-08-28",
+          "v": 5.2005
+        },
+        {
+          "d": "2026-08-31",
+          "v": 5.1816
+        },
+        {
+          "d": "2026-09-01",
+          "v": 5.157
+        },
+        {
+          "d": "2026-09-02",
+          "v": 5.1273
+        },
+        {
+          "d": "2026-09-03",
+          "v": 5.0962
+        },
+        {
+          "d": "2026-09-04",
+          "v": 5.1253
+        },
+        {
+          "d": "2026-09-08",
+          "v": 5.0856
+        },
+        {
+          "d": "2026-09-09",
+          "v": 5.0979
+        },
+        {
+          "d": "2026-09-10",
+          "v": 5.1149
+        },
+        {
+          "d": "2026-09-11",
+          "v": 5.0918
+        }
+      ],
+      "tipo": "PTAX venda",
+      "valor": 5.0918,
+      "variacao": -0.45
+    },
+    "fontes": [
+      {
+        "nome": "Banco Central (SGS) — PTAX, Selic, IPCA",
+        "url": "https://dadosabertos.bcb.gov.br/"
+      },
+      {
+        "nome": "Diário do Grande ABC — fechamento 10/09",
+        "url": "https://www.dgabc.com.br/Noticia/4346240/fechamento-do-mercado-financeiro"
+      },
+      {
+        "nome": "Fundos Explorer — IFIX fecha 10/09",
+        "url": "https://www.fundsexplorer.com.br/noticias/ifix-fecha-quinta-feira-em-alta-de-006-aos-3-74697-pontos"
+      },
+      {
+        "nome": "Meelion — Selic hoje",
+        "url": "https://www.meelion.com/indicadores-financeiros/selic/"
+      },
+      {
+        "nome": "Jornal de Brasília — IPCA agosto/2026",
+        "url": "https://jornaldebrasilia.com.br/noticias/economia/ipca-registra-deflacao-de-032-em-agosto-afirma-ibge/"
+      }
+    ],
+    "ibovespa": {
+      "data": "2026-09-10",
+      "nota": "maior fechamento em 4 meses",
+      "valor": 188268.59,
+      "variacao": 1.42
+    },
+    "ifix": {
+      "data": "2026-09-10",
+      "valor": 3746.97,
+      "variacao": 0.06
+    },
+    "ipca12m": {
+      "ref": "ago/2026",
+      "valor": 4.22
+    },
+    "selic": {
+      "data": "2026-09-11",
+      "valor": 14
+    },
+    "watchlist": [
+      {
+        "data": "2026-09-10",
+        "nome": "Itaú Unibanco PN",
+        "preco": 42.32,
+        "ticker": "ITUB4",
+        "variacao": 1.76
+      },
+      {
+        "data": "2026-09-10",
+        "nome": "Petrobras PN",
+        "preco": 49.17,
+        "ticker": "PETR4",
+        "variacao": 1.55
+      },
+      {
+        "data": "2026-09-10",
+        "nome": "Vale ON",
+        "preco": 78.2,
+        "ticker": "VALE3",
+        "variacao": -1.14
+      },
+      {
+        "data": "2026-09-10",
+        "nome": "Bradesco PN",
+        "preco": 18.45,
+        "ticker": "BBDC4",
+        "variacao": 3.71
+      },
+      {
+        "data": "2026-09-10",
+        "nome": "Ambev ON",
+        "preco": 15.77,
+        "ticker": "ABEV3",
+        "variacao": 1.22
+      }
+    ]
+  },
+  "origem": "tarefa agendada"
+}

@@ -1,0 +1,430 @@
+<title>Radar do Weslley</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EDF1F3; --surface:#FFFFFF; --sunk:#F5F8F9;
+  --ink:#14212B; --ink-2:#465763; --muted:#6F7F8B; --line:#D5DDE2;
+  --accent:#0B6E7D; --accent-soft:#DDEFF1; --on-accent:#FFFFFF;
+  --up:#16794A; --down:#BE3A2E; --warn:#9A5B00; --warn-soft:#FBEFD9; --warn-line:#E9C88E;
+  --focus:#0B6E7D;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1317; --surface:#131D23; --sunk:#0F181D;
+    --ink:#E3EAED; --ink-2:#A8B6BF; --muted:#7D8C96; --line:#23313A;
+    --accent:#52B8C6; --accent-soft:#12343A; --on-accent:#06181C;
+    --up:#46C281; --down:#F2776C; --warn:#E6A94A; --warn-soft:#2B2213; --warn-line:#5A4523;
+    --focus:#52B8C6;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1317; --surface:#131D23; --sunk:#0F181D;
+  --ink:#E3EAED; --ink-2:#A8B6BF; --muted:#7D8C96; --line:#23313A;
+  --accent:#52B8C6; --accent-soft:#12343A; --on-accent:#06181C;
+  --up:#46C281; --down:#F2776C; --warn:#E6A94A; --warn-soft:#2B2213; --warn-line:#5A4523;
+  --focus:#52B8C6;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;padding-inline:clamp(16px,4vw,40px);padding-block:28px 48px}
+.wrap{max-width:1180px;margin-inline:auto;display:grid;gap:20px}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(28px,4vw,38px);line-height:1.05}
+h2{font-size:21px;line-height:1.2}
+h3{font-size:15px;font-weight:500;font-family:var(--f-body)}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.label{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+/* topo */
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+.top .hoje{margin-bottom:6px}
+.fresh{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--up);flex:none}
+.dot.velho{background:var(--warn)}
+
+/* alerta */
+.alerta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:10px;padding:14px 18px}
+.alerta .chip{background:var(--warn);color:var(--surface)}
+.alerta p{flex:1 1 280px;color:var(--ink)}
+.alerta strong{font-weight:600}
+.alerta .acoes{display:flex;gap:8px;flex-wrap:wrap}
+
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.btn{font:inherit;font-size:13.5px;font-weight:500;border-radius:8px;padding:7px 13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--ink-2)}
+.btn.primario{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.primario:hover{filter:brightness(1.08)}
+
+/* grade */
+.grade{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.grade{grid-template-columns:1fr}}
+.painel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:16px}
+.painel>header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px}
+.painel>header p{font-size:13px;color:var(--muted)}
+.rodape{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.rodape a{color:var(--muted)}
+
+/* prazos */
+.prazos{list-style:none;margin:0;padding:0;display:grid}
+.prazo{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding-block:16px;border-top:1px solid var(--line)}
+.prazo:first-child{border-top:0;padding-top:4px}
+.data{display:grid;justify-items:start;align-content:start;gap:6px}
+.data .dia{font-family:var(--f-display);font-size:30px;font-weight:700;line-height:.95}
+.data .mes{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.falta{background:var(--accent-soft);color:var(--accent)}
+.falta.urgente{background:var(--warn);color:var(--surface)}
+.falta.fechou{background:var(--sunk);color:var(--muted);border:1px solid var(--line)}
+.corpo{display:grid;gap:8px;min-width:0}
+.titulo{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.titulo h3{font-family:var(--f-display);font-size:18px;font-weight:700}
+.titulo .trilha{font-size:13px;color:var(--ink-2)}
+.fatos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 16px;margin:0}
+.fatos div{min-width:0}
+.fatos dt{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.fatos dd{margin:0;font-size:13.5px;color:var(--ink)}
+.encaixe{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2)}
+.enc{border:1px solid currentColor}
+.enc.sim{color:var(--up)}
+.enc.verificar{color:var(--warn)}
+.enc.nao{color:var(--down)}
+.linha-acoes{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{font:inherit;font-size:12.5px;padding:5px 10px;border:0;background:var(--surface);color:var(--ink-2);cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.seg button:disabled{cursor:not-allowed;opacity:.6}
+.prazo.descartado{opacity:.5}
+.prazo.inscrito .dia{color:var(--up)}
+@media (max-width:560px){
+  .prazo{grid-template-columns:1fr;gap:10px}
+  .data{display:flex;align-items:baseline;gap:8px}
+}
+.vazio{color:var(--muted);font-size:14px;padding-block:8px}
+
+/* mercado */
+.macro{display:grid;margin:0}
+.macro .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding-block:12px;border-top:1px solid var(--line)}
+.macro .item:first-child{border-top:0;padding-top:0}
+.macro .nome{font-size:13.5px;color:var(--ink-2)}
+.macro .valor{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:22px;font-weight:500;text-align:right;line-height:1.2}
+.macro .sub{font-size:12.5px;color:var(--muted)}
+.macro .var{text-align:right;font-size:13px}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--muted)}
+.spark{grid-column:1/-1;position:relative;margin-top:6px}
+.spark svg{display:block;width:100%;height:64px;overflow:visible}
+.spark .tip{position:absolute;top:-6px;transform:translate(-50%,-100%);background:var(--ink);color:var(--surface);font-family:var(--f-mono);font-size:11.5px;padding:3px 7px;border-radius:5px;white-space:nowrap;pointer-events:none}
+.spark .eixo{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);font-family:var(--f-mono)}
+
+.watch-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.exemplo{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn-line)}
+.tabela{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:0 0 6px;border-bottom:1px solid var(--line)}
+td{padding:8px 0;border-bottom:1px solid var(--line);vertical-align:baseline}
+th.r,td.r{text-align:right}
+td .tk{font-family:var(--f-mono);font-weight:500}
+td .nm{display:block;font-size:12px;color:var(--muted)}
+tr.pendente td{color:var(--muted)}
+.editor{display:flex;flex-wrap:wrap;gap:8px}
+.editor input{flex:1 1 200px;min-width:0;font:inherit;font-family:var(--f-mono);font-size:13.5px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--sunk);color:var(--ink)}
+.editor .msg{flex-basis:100%;font-size:12.5px;color:var(--muted)}
+
+/* desconectados */
+.fontes-futuras{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.slot{border:1px dashed var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:6px;background:transparent}
+.slot h3{font-family:var(--f-display);font-size:16px;font-weight:700}
+.slot p{font-size:13.5px;color:var(--ink-2);max-width:60ch}
+
+.aviso{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;color:var(--ink-2)}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--surface);font-size:13.5px;padding:8px 14px;border-radius:8px}
+@media (prefers-reduced-motion:no-preference){.prazo,.macro .item{transition:opacity .2s}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <p class="label hoje" id="hoje">&nbsp;</p>
+      <h1>Radar do Weslley</h1>
+    </div>
+    <p class="fresh" id="fresh"><span class="dot" id="dot"></span><span id="freshTxt">Carregando dados…</span></p>
+  </header>
+
+  <section class="alerta" id="alerta" hidden aria-live="polite"></section>
+
+  <div class="aviso" id="semDb" hidden>
+    Os dados deste painel ficam guardados no Claude. Abra esta página pelo claude.ai para ver os prazos e o mercado atualizados.
+  </div>
+
+  <div class="grade" id="grade">
+    <section class="painel" aria-labelledby="h-carreira">
+      <header>
+        <h2 id="h-carreira">Prazos de estágio 2027</h2>
+        <p id="perfil">Tecnologia · formatura dez/2027</p>
+      </header>
+      <ul class="prazos" id="prazos"><li class="vazio">Carregando…</li></ul>
+      <footer class="rodape" id="rodCarreira"></footer>
+    </section>
+
+    <section class="painel" aria-labelledby="h-mercado">
+      <header>
+        <h2 id="h-mercado">Mercado</h2>
+        <p id="mercadoData"></p>
+      </header>
+      <div class="macro" id="macro"></div>
+
+      <div class="watch-head">
+        <h3>Watchlist</h3>
+        <span class="chip exemplo" id="tagExemplo" hidden>Exemplo — troque pelos seus</span>
+      </div>
+      <div class="tabela">
+        <table>
+          <thead><tr><th scope="col">Ativo</th><th scope="col" class="r">Preço</th><th scope="col" class="r">Dia</th></tr></thead>
+          <tbody id="watch"></tbody>
+        </table>
+      </div>
+      <form class="editor" id="editor">
+        <label class="label" for="tickers" style="flex-basis:100%">Seus tickers (separe por vírgula)</label>
+        <input id="tickers" name="tickers" autocomplete="off" spellcheck="false" placeholder="ITUB4, MXRF11, HGLG11">
+        <button class="btn" type="submit" id="salvarTk">Salvar</button>
+        <p class="msg" id="tkMsg">Os preços dos novos tickers entram na próxima atualização automática.</p>
+      </form>
+      <footer class="rodape" id="rodMercado"></footer>
+    </section>
+  </div>
+
+  <section class="fontes-futuras" aria-label="Fontes ainda não conectadas">
+    <div class="slot">
+      <p class="label">Não conectado</p>
+      <h3>Agenda</h3>
+      <p>O Google Calendar está instalado, mas não conectado. Conectado, este espaço mostra seus próximos compromissos e o que conflita com os prazos acima.</p>
+    </div>
+    <div class="slot">
+      <p class="label">Não conectado</p>
+      <h3>Caixa de entrada</h3>
+      <p>O Gmail também está instalado sem conexão. Conectado, este espaço mostra respostas de processos seletivos e e-mails que pedem ação.</p>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script>
+(function(){
+  const TZ = "America/Sao_Paulo";
+  const $ = (id) => document.getElementById(id);
+  const nf = (v, d) => new Intl.NumberFormat("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
+  const hojeISO = () => new Intl.DateTimeFormat("en-CA",{timeZone:TZ}).format(new Date());
+  const diasAte = (iso) => Math.round((Date.parse(iso+"T12:00:00Z") - Date.parse(hojeISO()+"T12:00:00Z"))/864e5);
+  const fmtDataCurta = (iso) => { const [y,m,d] = iso.split("-"); return d+"/"+m; };
+  const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const safeUrl = (u) => /^https:\/\//i.test(u||"") ? u : "#";
+
+  let snap = null, config = null, cand = {status:{}}, db = null;
+
+  $("hoje").textContent = new Intl.DateTimeFormat("pt-BR",{timeZone:TZ,weekday:"long",day:"numeric",month:"long"}).format(new Date());
+
+  function toast(msg){ const t=$("toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true,2600); }
+
+  function proximaAtualizacao(){
+    // seg–sex às 07:30 (horário de Brasília = UTC-3)
+    const now = new Date();
+    for (let i=0;i<8;i++){
+      const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()+i, 10, 30));
+      const wd = d.getUTCDay();
+      if (wd>=1 && wd<=5 && d > now) return d;
+    }
+  }
+  function relTempo(iso){
+    const min = Math.round((Date.now()-Date.parse(iso))/60000);
+    if (min < 1) return "agora";
+    if (min < 60) return "há "+min+" min";
+    const h = Math.round(min/60);
+    if (h < 24) return "há "+h+" h";
+    const d = Math.round(h/24); return "há "+d+(d>1?" dias":" dia");
+  }
+  function renderFresh(){
+    if (!snap) return;
+    const prox = proximaAtualizacao();
+    const proxTxt = new Intl.DateTimeFormat("pt-BR",{timeZone:TZ,weekday:"short",hour:"2-digit",minute:"2-digit"}).format(prox);
+    const horas = (Date.now()-Date.parse(snap.atualizadoEm))/36e5;
+    $("dot").classList.toggle("velho", horas > 80);
+    $("freshTxt").textContent = "Atualizado "+relTempo(snap.atualizadoEm)+" · próxima: "+proxTxt;
+  }
+
+  function varHtml(v){
+    if (v == null || isNaN(v)) return '<span class="flat">—</span>';
+    const cls = v>0 ? "up" : v<0 ? "down" : "flat";
+    const seta = v>0 ? "▲" : v<0 ? "▼" : "■";
+    return '<span class="num '+cls+'">'+seta+" "+(v>0?"+":"")+nf(v,2)+"%</span>";
+  }
+
+  /* ---------- carreira ---------- */
+  function statusDe(id){ return (cand.status||{})[id] || "pendente"; }
+  function renderCarreira(){
+    const lista = $("prazos");
+    const ops = ((snap && snap.carreira && snap.carreira.oportunidades) || [])
+      .filter(o => diasAte(o.prazo) >= -7)
+      .map(o => ({...o, _dias: diasAte(o.prazo), _st: statusDe(o.id)}))
+      .sort((a,b) => (a._st==="descartado") - (b._st==="descartado") || (a._dias<0) - (b._dias<0) || a._dias - b._dias);
+    if (config && config.perfil){
+      $("perfil").textContent = "Tecnologia · formatura "+config.perfil.formatura+" · "+(config.perfil.modalidade||"").split(";")[0];
+    }
+    if (!ops.length){ lista.innerHTML = '<li class="vazio">Nenhum prazo aberto encontrado na última busca.</li>'; }
+    else lista.innerHTML = ops.map(o => {
+      const [,m,d] = o.prazo.split("-");
+      let falta, cls = "falta";
+      if (o._dias < 0){ falta = "Encerrada"; cls += " fechou"; }
+      else if (o._dias === 0){ falta = "Fecha hoje"; cls += " urgente"; }
+      else if (o._dias === 1){ falta = "Amanhã"; cls += " urgente"; }
+      else { falta = o._dias+" dias"; if (o._dias<=3) cls += " urgente"; }
+      const encTxt = {sim:"Encaixa", verificar:"Verificar", nao:"Não encaixa"}[o.encaixe] || "Verificar";
+      const fechada = o._dias < 0;
+      const btn = (val, txt) => '<button type="button" data-id="'+esc(o.id)+'" data-st="'+val+'" aria-pressed="'+(o._st===val)+'"'+(db?"":" disabled")+'>'+txt+'</button>';
+      return '<li class="prazo '+o._st+'">'+
+        '<div class="data"><span class="dia num">'+d+'</span><span class="mes">'+MESES[+m-1]+'</span><span class="chip '+cls+'">'+falta+'</span></div>'+
+        '<div class="corpo">'+
+          '<div class="titulo"><h3>'+esc(o.empresa)+' · '+esc(o.programa)+'</h3><span class="trilha">'+esc(o.trilha)+'</span></div>'+
+          '<dl class="fatos">'+
+            '<div><dt>Formatura exigida</dt><dd>'+esc(o.formatura)+'</dd></div>'+
+            '<div><dt>Modalidade</dt><dd>'+esc(o.modalidade)+'</dd></div>'+
+            '<div><dt>Bolsa</dt><dd>'+esc(o.bolsa)+'</dd></div>'+
+          '</dl>'+
+          '<p class="encaixe"><span class="chip enc '+esc(o.encaixe)+'">'+encTxt+'</span>'+esc(o.motivo)+'</p>'+
+          '<div class="linha-acoes">'+
+            (fechada ? '' : '<a class="btn'+(o._dias<=3 && o._st==="pendente" ? " primario":"")+'" href="'+esc(safeUrl(o.link))+'" target="_blank" rel="noopener">Abrir inscrição ↗</a>')+
+            '<span class="seg" role="group" aria-label="Minha situação em '+esc(o.empresa)+'">'+btn("pendente","Pendente")+btn("inscrito","Inscrito")+btn("descartado","Descartar")+'</span>'+
+          '</div>'+
+        '</div></li>';
+    }).join("");
+
+    // alerta: prazos em até 3 dias ainda pendentes
+    const urg = ops.filter(o => o._dias>=0 && o._dias<=3 && o._st==="pendente");
+    const al = $("alerta");
+    if (urg.length){
+      const o = urg[0];
+      const quando = o._dias===0 ? "fecha hoje" : o._dias===1 ? "fecha amanhã" : "fecha em "+o._dias+" dias";
+      al.innerHTML = '<span class="chip">Prazo</span><p><strong>'+esc(o.empresa)+' '+esc(o.programa)+'</strong> '+quando+' e você ainda não marcou inscrição.'+(urg.length>1?' Mais '+(urg.length-1)+' prazo(s) nos próximos 3 dias.':'')+'</p>'+
+        '<span class="acoes"><a class="btn primario" href="'+esc(safeUrl(o.link))+'" target="_blank" rel="noopener">Abrir inscrição ↗</a></span>';
+      al.hidden = false;
+    } else al.hidden = true;
+
+    const c = snap && snap.carreira;
+    const fontes = ops.map(o => '<a href="'+esc(safeUrl(o.fonte))+'" target="_blank" rel="noopener">'+esc(o.empresa)+'</a>').join(" · ");
+    $("rodCarreira").innerHTML = (c && c.buscadoEm ? "<span>Busca feita "+relTempo(c.buscadoEm)+"</span>" : "") + (fontes ? "<span>Fontes: "+fontes+"</span>" : "");
+  }
+
+  $("prazos").addEventListener("click", async (e) => {
+    const b = e.target.closest("button[data-st]"); if (!b || !db) return;
+    const id = b.dataset.id, st = b.dataset.st;
+    const novo = {...(cand.status||{})}; novo[id] = st;
+    cand = {...cand, status: novo}; renderCarreira();
+    try { await db.doc("painel/candidaturas").set({status: novo, alteradoEm: new Date().toISOString()}); toast(st==="inscrito"?"Marcado como inscrito":st==="descartado"?"Descartado":"Voltou para pendente"); }
+    catch(err){ toast("Não salvou: "+(err && err.message || "tente de novo")); }
+  });
+
+  /* ---------- mercado ---------- */
+  function spark(serie){
+    if (!serie || serie.length < 2) return "";
+    const W=300, H=64, P=4;
+    const vs = serie.map(p=>p.v), min=Math.min(...vs), max=Math.max(...vs);
+    const x = i => P + i*(W-2*P)/(serie.length-1);
+    const y = v => max===min ? H/2 : P + (max-v)*(H-2*P)/(max-min);
+    const pts = serie.map((p,i)=>x(i).toFixed(1)+","+y(p.v).toFixed(1));
+    const line = "M"+pts.join(" L");
+    const area = line+" L"+x(serie.length-1).toFixed(1)+","+(H)+" L"+x(0).toFixed(1)+","+H+" Z";
+    const iMin = vs.indexOf(min), iMax = vs.indexOf(max), last = serie.length-1;
+    return '<div class="spark" id="spark"><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Dólar PTAX de '+fmtDataCurta(serie[0].d)+' a '+fmtDataCurta(serie[last].d)+': mínima R$ '+nf(min,4)+', máxima R$ '+nf(max,4)+'">'+
+      '<line x1="0" x2="'+W+'" y1="'+y(min).toFixed(1)+'" y2="'+y(min).toFixed(1)+'" stroke="var(--line)" stroke-width="1" vector-effect="non-scaling-stroke"/>'+
+      '<line x1="0" x2="'+W+'" y1="'+y(max).toFixed(1)+'" y2="'+y(max).toFixed(1)+'" stroke="var(--line)" stroke-width="1" vector-effect="non-scaling-stroke"/>'+
+      '<path d="'+area+'" fill="var(--accent)" fill-opacity=".12"/>'+
+      '<path d="'+line+'" fill="none" stroke="var(--accent)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>'+
+      '<line id="cross" x1="0" x2="0" y1="0" y2="'+H+'" stroke="var(--muted)" stroke-width="1" vector-effect="non-scaling-stroke" visibility="hidden"/>'+
+      '</svg>'+
+      '<span class="spark-dot" style="position:absolute;left:calc('+(x(last)/W*100).toFixed(2)+'% - 4px);top:'+(y(serie[last].v)-4).toFixed(1)+'px;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px var(--surface)"></span>'+
+      '<span class="tip" id="tip" hidden></span>'+
+      '<div class="eixo"><span>'+fmtDataCurta(serie[0].d)+'</span><span>mín '+nf(min,4)+' · máx '+nf(max,4)+'</span><span>'+fmtDataCurta(serie[last].d)+'</span></div></div>';
+  }
+  function ligaSpark(serie){
+    const box = $("spark"); if (!box) return;
+    const svg = box.querySelector("svg"), tip = $("tip"), cross = $("cross");
+    const W=300;
+    const mover = (ev) => {
+      const r = svg.getBoundingClientRect();
+      const fx = Math.min(Math.max((ev.clientX - r.left)/r.width, 0), 1);
+      const i = Math.round(fx*(serie.length-1));
+      const px = (4 + i*(W-8)/(serie.length-1));
+      cross.setAttribute("x1",px); cross.setAttribute("x2",px); cross.setAttribute("visibility","visible");
+      tip.hidden = false; tip.style.left = (px/W*100)+"%";
+      tip.textContent = fmtDataCurta(serie[i].d)+" · R$ "+nf(serie[i].v,4);
+    };
+    svg.addEventListener("pointermove", mover);
+    svg.addEventListener("pointerleave", ()=>{ tip.hidden=true; cross.setAttribute("visibility","hidden"); });
+  }
+
+  function renderMercado(){
+    const m = snap && snap.mercado; if (!m) return;
+    const itens = [];
+    if (m.ibovespa) itens.push('<div class="item"><div class="nome">Ibovespa</div><div class="valor" style="margin:0">'+nf(m.ibovespa.valor,0)+'<span class="sub"> pts</span></div>'+
+      '<div class="sub" style="margin:0">Fech. '+fmtDataCurta(m.ibovespa.data)+(m.ibovespa.nota?" · "+esc(m.ibovespa.nota):"")+'</div><div class="var" style="margin:0">'+varHtml(m.ibovespa.variacao)+'</div></div>');
+    if (m.ifix) itens.push('<div class="item"><div class="nome">IFIX · fundos imobiliários</div><div class="valor" style="margin:0">'+nf(m.ifix.valor,2)+'</div>'+
+      '<div class="sub" style="margin:0">Fech. '+fmtDataCurta(m.ifix.data)+'</div><div class="var" style="margin:0">'+varHtml(m.ifix.variacao)+'</div></div>');
+    if (m.dolar) itens.push('<div class="item"><div class="nome">Dólar · '+esc(m.dolar.tipo||"PTAX")+'</div><div class="valor" style="margin:0">R$ '+nf(m.dolar.valor,4)+'</div>'+
+      '<div class="sub" style="margin:0">'+fmtDataCurta(m.dolar.data)+' · últimos '+((m.dolar.serie||[]).length)+' pregões</div><div class="var" style="margin:0">'+varHtml(m.dolar.variacao)+'</div>'+spark(m.dolar.serie)+'</div>');
+    if (m.selic){
+      const real = m.ipca12m ? ((1+m.selic.valor/100)/(1+m.ipca12m.valor/100)-1)*100 : null;
+      itens.push('<div class="item"><div class="nome">Selic meta</div><div class="valor" style="margin:0">'+nf(m.selic.valor,2)+'<span class="sub">% a.a.</span></div>'+
+        '<div class="sub" style="margin:0;grid-column:1/-1">'+(real!=null ? 'Juro real ≈ '+nf(real,1)+'% (descontado o IPCA 12m de '+nf(m.ipca12m.valor,2)+'%, '+esc(m.ipca12m.ref)+')' : '')+'</div></div>');
+    }
+    $("macro").innerHTML = itens.join("");
+    if (m.dolar) ligaSpark(m.dolar.serie||[]);
+    $("mercadoData").textContent = "fechamentos de "+ (m.ibovespa ? fmtDataCurta(m.ibovespa.data) : "—");
+
+    const tickers = (config && config.watchlist) || (m.watchlist||[]).map(w=>w.ticker);
+    const porTk = Object.fromEntries((m.watchlist||[]).map(w=>[w.ticker,w]));
+    $("watch").innerHTML = tickers.map(tk => {
+      const w = porTk[tk];
+      if (!w || w.preco == null) return '<tr class="pendente"><td><span class="tk">'+esc(tk)+'</span><span class="nm">aguardando próxima atualização</span></td><td class="r num">—</td><td class="r">—</td></tr>';
+      return '<tr><td><span class="tk">'+esc(tk)+'</span><span class="nm">'+esc(w.nome||"")+'</span></td><td class="r num">R$ '+nf(w.preco,2)+'</td><td class="r">'+varHtml(w.variacao)+'</td></tr>';
+    }).join("") || '<tr><td colspan="3" class="vazio">Adicione tickers abaixo.</td></tr>';
+    $("tagExemplo").hidden = !(config && config.watchlistExemplo);
+    const inp = $("tickers"); if (document.activeElement !== inp) inp.value = tickers.join(", ");
+    $("rodMercado").innerHTML = (m.fontes||[]).map(f => '<a href="'+esc(safeUrl(f.url))+'" target="_blank" rel="noopener">'+esc(f.nome)+'</a>').join(" · ");
+  }
+
+  $("editor").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const lista = $("tickers").value.toUpperCase().split(/[\s,;]+/).filter(Boolean);
+    const invalidos = lista.filter(t => !/^[A-Z]{4}\d{1,2}$/.test(t));
+    if (!lista.length){ $("tkMsg").textContent = "Digite ao menos um ticker, como PETR4 ou MXRF11."; return; }
+    if (invalidos.length){ $("tkMsg").textContent = "Não reconheci: "+invalidos.join(", ")+". Use o código da B3, como ITUB4 ou HGLG11."; return; }
+    if (!db){ $("tkMsg").textContent = "Abra pelo claude.ai para salvar."; return; }
+    const unicos = [...new Set(lista)].slice(0,15);
+    try {
+      await db.doc("painel/config").set({...(config||{}), watchlist: unicos, watchlistExemplo: false, alteradoEm: new Date().toISOString()});
+      $("tkMsg").textContent = "Salvo. Os preços dos novos tickers entram na próxima atualização automática.";
+      toast("Watchlist salva");
+    } catch(err){ $("tkMsg").textContent = "Não salvou ("+(err && err.code || "erro")+"). Tente de novo em instantes."; }
+  });
+
+  function renderTudo(){ renderFresh(); renderCarreira(); renderMercado(); }
+
+  async function iniciar(){
+    for (let i=0; i<30 && !(window.claude && window.claude.use); i++) await new Promise(r=>setTimeout(r,100));
+    db = window.claude && window.claude.use ? await window.claude.use("db") : null;
+    if (!db){ $("semDb").hidden = false; $("grade").hidden = true; $("freshTxt").textContent = "Sem conexão com os dados"; $("dot").classList.add("velho"); return; }
+    const falha = (e) => { $("freshTxt").textContent = "Não consegui ler os dados agora"; $("dot").classList.add("velho"); };
+    db.doc("painel/snapshot").onSnapshot(s => { snap = s.exists ? s.data() : null; if (!snap){ $("prazos").innerHTML='<li class="vazio">Ainda sem dados — a primeira atualização automática preenche este painel.</li>'; return; } renderTudo(); }, falha);
+    db.doc("painel/config").onSnapshot(s => { config = s.exists ? s.data() : null; if (snap) renderTudo(); }, falha);
+    db.doc("painel/candidaturas").onSnapshot(s => { cand = s.exists ? (s.data()||{status:{}}) : {status:{}}; if (snap) renderCarreira(); }, falha);
+    setInterval(renderFresh, 60000);
+  }
+  iniciar();
+})();
+</script>
